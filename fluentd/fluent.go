@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"fluent-logger-golang/fluentd/diskqueue"
+	"github.com/nsqio/go-diskqueue"
 	"fmt"
 )
 

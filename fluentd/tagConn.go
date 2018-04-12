@@ -4,7 +4,7 @@ import (
 	"net"
 	"sync"
 	"bytes"
-	"fluent-logger-golang/fluentd/diskqueue"
+	"github.com/nsqio/go-diskqueue"
 	"strconv"
 	"time"
 	"math"
@@ -14,9 +14,9 @@ import (
 
 type tagConn struct {
 	Config
-	tag    string
-	curAck string
-	waitAck   bool
+	tag     string
+	curAck  string
+	waitAck bool
 
 	writeBuf *bytes.Buffer
 	readBuf  *bytes.Buffer
@@ -25,10 +25,10 @@ type tagConn struct {
 	queue    diskqueue.Interface
 	useQueue bool
 
-	conn         net.Conn
-	connClosed	 bool
-	rwMuConn       sync.RWMutex
-	connErr      error
+	conn       net.Conn
+	connClosed bool
+	rwMuConn   sync.RWMutex
+	connErr    error
 
 	codecHandle     codec.MsgpackHandle
 	encoder         *codec.Encoder
@@ -153,9 +153,9 @@ func (t *tagConn) Write(data interface{}) (err error) {
 
 func (t *tagConn) newForward(entries []byte) *Forward {
 	forward := Forward{
-		Tag: t.tag,
+		Tag:     t.tag,
 		Entries: entries,
-		Option: Option{ Chunk: strconv.FormatInt(time.Now().UnixNano(), 10) },
+		Option:  Option{Chunk: strconv.FormatInt(time.Now().UnixNano(), 10)},
 	}
 
 	return &forward
@@ -178,7 +178,7 @@ func (t *tagConn) send() (err error) {
 
 	if t.useQueue {
 		if t.queue.Depth() > 0 {
-			data = <- t.queue.ReadChan()
+			data = <-t.queue.ReadChan()
 			goto send
 		}
 
@@ -192,7 +192,7 @@ func (t *tagConn) send() (err error) {
 	}
 	t.muBuffer.Unlock()
 
-	send:
+send:
 	if data != nil {
 		forward := t.newForward(data)
 		err = t.writeBufEncoder.Encode(forward)
@@ -234,7 +234,7 @@ func (t *tagConn) sendWriteBuf() (err error) {
 	return
 }
 
-func (t *tagConn) receive () (err error) {
+func (t *tagConn) receive() (err error) {
 	if !t.waitAck {
 		return
 	}
@@ -284,7 +284,7 @@ func e(x, y float64) int {
 	return int(math.Pow(x, y))
 }
 
-func  (t *tagConn) connIsClosed() (b bool) {
+func (t *tagConn) connIsClosed() (b bool) {
 	if t.conn != nil {
 		t.rwMuConn.RLock()
 		b = t.connClosed
@@ -295,7 +295,7 @@ func  (t *tagConn) connIsClosed() (b bool) {
 	return
 }
 
-func  (t *tagConn) connClose() error {
+func (t *tagConn) connClose() error {
 	if t.conn == nil || t.connIsClosed() {
 		return t.connErr
 	}

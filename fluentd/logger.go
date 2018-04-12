@@ -3,7 +3,7 @@ package fluentd
 import (
 	"log"
 	"fmt"
-	"fluent-logger-golang/fluentd/diskqueue"
+	"github.com/nsqio/go-diskqueue"
 )
 
 const (
