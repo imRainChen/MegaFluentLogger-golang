@@ -1,3 +1,9 @@
+安装
+----------
+```
+go get github.com/imRainChen/mega-fluent-logger-golang/fluentd
+```
+
 功能特性
 ----------
  - 异步无阻塞发送
@@ -11,7 +17,7 @@ Example
 package main
 
 import (
-  "github.com/fluent/fluent-logger-golang/fluent"
+  "github.com/imRainChen/mega-fluent-logger-golang/fluentd"
   "fmt"
   "time"
 )
