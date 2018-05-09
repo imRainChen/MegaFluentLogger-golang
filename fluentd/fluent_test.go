@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"path/filepath"
 	"fmt"
-	"fluent-logger-golang/fluentdentd/diskqueue"
+	"github.com/nsqio/go-diskqueue"
 	"net"
 	"github.com/ugorji/go/codec"
 	"time"

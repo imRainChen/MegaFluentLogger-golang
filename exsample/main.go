@@ -1,19 +1,3 @@
-安装
-----------
-```
-go get github.com/imRainChen/mega-fluent-logger-golang/fluentd
-```
-
-功能特性
-----------
- - 异步无阻塞发送
- - 底层批量发送日志
- - ACK确认
- - 文件队列缓存
-
-Example
-----------
-```golang
 package main
 
 import (
@@ -28,7 +12,7 @@ func main() {
 	}
 	defer logger.Close()
 
-	tag := "game.mega"
+	tag := "app.mega"
 	var data = map[string]string{
 		"foo":  "bar",
 		"hoge": "hoge",
@@ -39,5 +23,3 @@ func main() {
 		panic(err)
 	}
 }
-
-```

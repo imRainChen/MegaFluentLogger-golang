@@ -341,14 +341,6 @@ exit:
 	t.logf(INFO, "TAG-CONN(%s) close io loop", t.tag)
 }
 
-//func (t *tagConn) asyncDo(fn func()) {
-//	t.waitGroup.Add(1)
-//	go func() {
-//		fn()
-//		t.waitGroup.Done()
-//	}()
-//}
-
 // 立即关闭
 // 不等待缓冲区数据发送完毕，会将所有未发送数据写入文件队列
 func (t *tagConn) CloseAtOnce() {
